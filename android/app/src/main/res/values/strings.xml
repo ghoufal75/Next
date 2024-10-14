@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Next</string>
+    <string name="title_activity_main">Next</string>
+    <string name="package_name">io.ionic.starter</string>
+    <string name="custom_url_scheme">io.ionic.starter</string>
+    <string name="server_client_id">564987887798-7041k8coh25u4v5alre4me27knhfueuq.apps.googleusercontent.com</string>
+    <string name="facebook_app_id">502994582065134</string>
+    <string name="facebook_client_token">14a72f101368f75a1c1a2a0a3b2cca71</string>
+
+
+</resources>

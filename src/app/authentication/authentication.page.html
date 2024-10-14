@@ -1,0 +1,71 @@
+<!-- <ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>authentication</ion-title>
+  </ion-toolbar>
+</ion-header> -->
+
+<ion-content [fullscreen]="true">
+  <div class="logo" *ngIf="!firstConnection">
+    <img src="assets/Logos/logo-no-slogan2.png" alt="app-logo">
+  </div>
+  <!-- <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">authentication</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-button (click)="singInGoogle()" color="danger">
+    <ion-icon name="logo-google" slot="start"></ion-icon>
+    <ion-label>Google</ion-label>
+  </ion-button> -->
+  <div class="overlay"></div>
+  <div class="createAccount" *ngIf="!firstConnection">
+    <p>Dont't have an account ?</p>
+    <a>Create one now !</a>
+  </div>
+  <div class="connection" *ngIf="!firstConnection">
+      <div class="google">
+        <a (click)="singInGoogle()" class="connection__btn connection__btn--ggl">
+          <ion-icon color='light' name="logo-google"></ion-icon>
+        </a>
+      </div>
+      <div class="facebook">
+        <a (click)="singInFacebook()" class="connection__btn connection__btn--fb">
+          <ion-icon color='light' name="logo-facebook"></ion-icon>
+        </a>
+      </div>
+      <div class="apple">
+        <a  class="connection__btn connection__btn--apl">
+          <ion-icon color='light' name="logo-apple"></ion-icon>
+        </a>
+      </div>
+  </div>
+  <video autoplay loop src="assets/backgrounds/bg-auth.mp4"></video>
+
+  <div *ngIf="firstConnection">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="11" offset=".5">
+          <div class="content">
+            <h2>Complétez votre profile</h2>
+            <div class="content--avatar">
+                <div class="avatar"(click)="pickPhoto()">
+                  <div class="overlay"></div>
+                  <ion-icon name="camera" color="light"></ion-icon>
+                  <img [src]="profilePicBase64??'https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png?20150327203541'" alt="avatar">
+                </div>
+            </div>
+            <div class="content--userData">
+                <ion-item>
+                  <ion-input (ionBlur)="onInputBlur()"  #usernameInput label="Username" [(ngModel)]="username" name="username"labelPlacement="floating" placeholder="" type="text" id="username"></ion-input>
+                </ion-item>
+                <span class="errorMsg errorMsg--input" *ngIf="inputTouched && getDisabledCondition()">The entered username should not include spaces neither special characters.</span>
+                <button class="submit" (click)="onUpdateUserInfos()" [disabled]="getDisabledCondition()">Continuer</button>
+
+            </div>
+          </div>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+</ion-content>

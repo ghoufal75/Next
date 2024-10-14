@@ -1,0 +1,37 @@
+cdk-virtual-scroll-viewport{
+  width : 100%;
+  height : 100%;
+
+}
+.content{
+  &__header{
+    padding: 0 1rem;
+
+  }
+}
+
+.primary-title{
+  font-weight: 1000;
+  font-size: 1.6rem;
+}
+.no-conversation{
+    width : 100vw;
+    height : 80%;
+    // background-color: red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color : #d1d1d1 !important;
+    ion-icon{
+      font-size: 6rem;
+      color : #d1d1d1 !important;
+    }
+
+}
+.fab{
+  position: fixed;
+  bottom: 3%;
+  right: 3%;
+}
+

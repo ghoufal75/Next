@@ -1,20 +1,24 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<ion-content>
+  <ion-router-outlet></ion-router-outlet>
+  <ion-tabs>
+   <ion-tab-bar slot="bottom"color="light"*ngIf="tabBarIsShown">
+     <ion-tab-button  class="msgTab tab"tab="messages">
+       <div class="badge"*ngIf="!isMessagesPage && unreadMessagesNumber!=0">{{unreadMessagesNumber}}</div>
+       <ion-icon name="chatbubbles"></ion-icon>
+       <!-- Discover -->
+     </ion-tab-button>
+    <ion-tab-button  class="tab"tab="notifications">
+      <ion-icon name="notifications"></ion-icon>
+      <!-- Discover -->
+    </ion-tab-button>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
-</ion-content>
+   </ion-tab-bar>
+
+   <button class="fabButton" (click)="navigateToFeed()"*ngIf="tabBarIsShown">
+     <ion-icon name="home"></ion-icon>
+   </button>
+
+ </ion-tabs>
+ </ion-content>
+

@@ -1,0 +1,40 @@
+
+<ion-content class="ionContent" [fullscreen]="true">
+  <div class="wrapper">
+    <div class="header">
+      <div class="header__left">
+        <ion-back-button color="light" mode="ios" defaultHref="/home/messages/messageList"></ion-back-button>
+        <ion-avatar>
+          <img [src]="getConversationImgUrl()" alt="Conv Img">
+        </ion-avatar>
+        <h5>{{getConversationName()}}</h5>
+      </div>
+      <div class="header__right">
+        <ion-button fill="clear" size="small">
+          <ion-icon name="call-outline" color="light" slot="icon-only"></ion-icon>
+        </ion-button>
+        <ion-button fill="clear" size="small">
+          <ion-icon name="videocam-outline" color="light" slot="icon-only"></ion-icon>
+        </ion-button>
+      </div>
+    </div>
+    <div class="wrapper__messages">
+      <div class="wrapper__overflow">
+        <div class="wrapper__message" long-press (press)="onLongPress($event,msg)" *ngFor="let msg of (actualConversation?.messages??[])"[ngStyle]="{'align-self' : msg.me?'flex-end':'flex-start'}">
+            <div class="content" [ngStyle]="{'background-color': msg.me?'#217173':'#f9f9f9',color:msg.me?'#ffff':'black'}"><strong>{{msg.me?'Me':getSenderName(msg.sender)}}</strong> : {{msg.content}}</div>
+            <span class="seenSymbol" [ngStyle]="{'color' : getMessageSeenState(msg)}"><ion-icon name="checkmark-done-outline"></ion-icon> </span><span class="sentAt">{{msg.sentAt | date : 'short'}}</span>
+        </div>
+      </div>
+    </div>
+    <div class="wrapper__input">
+      <div class="input">
+        <input type="text" class="msgInput" [(ngModel)]="messageInput">
+      </div>
+      <div class="send">
+        <ion-fab-button (click)=" sendMessage()" color="primary"size="small">
+          <ion-icon name="send-outline"size="small"></ion-icon>
+        </ion-fab-button>
+      </div>
+    </div>
+  </div>
+</ion-content>

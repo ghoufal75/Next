@@ -1,0 +1,129 @@
+<ion-header mode="ios">
+  <ion-toolbar mode="ios">
+    <ion-buttons slot="start">
+      <ion-menu-toggle autoHide="false" menu="main-content">
+      <ion-button autoHide="false" menu="main-content" color="dark" size="small">
+        <ion-icon src="../../assets/icon/Menu-icone.svg" slot="icon-only" color="dark"></ion-icon>
+      </ion-button>
+    </ion-menu-toggle>
+    <!-- <ion-menu-button autoHide="false" color="dark" 	menu="main-content"></ion-menu-button> -->
+    </ion-buttons>
+    <ion-buttons slot="primary">
+      <ion-avatar class="profilePic">
+        <img alt="Silhouette of a person's head" [src]="connectedUser.profilePic" />
+      </ion-avatar>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="content">
+  <div class="content__header">
+    <h2 class="primary-title">Chat</h2>
+  </div>
+  <!-- <div class="content__filters">
+
+  </div> -->
+  <div class="no-conversation"*ngIf='conversationList.length===0'>
+    <div>
+      <ion-icon name="snow-outline"></ion-icon>
+      <h6>No conversations for now</h6>
+    </div>
+  </div>
+
+  <cdk-virtual-scroll-viewport class="ion-margin-top"appendOnly itemSize="56" minBufferPx="900" maxBufferPx="1350" *ngIf="conversationList.length!==0">
+  <ion-list *ngIf="conversationList.length>0">
+    <ion-item-sliding   *cdkVirtualFor= "let cnv of conversationList; let i = index;" #ionSliding>
+      <ion-item  button detail="true" [routerLink]="['..','conversation',cnv._id]" >
+
+          <ion-avatar slot='start'size="large">
+              <img [src]="getConversationImgUrl(cnv)" width=100 heihgt=100 alt="Conv pic">
+          </ion-avatar>
+
+          <ion-label class="parcels">
+              <h2>{{ getConvName(cnv)}}</h2>
+              <p *ngIf="cnv.messages || cnv.messages.length>0">{{cnv.messages[cnv.messages.length-1].me?'Me':getSenderName(cnv._id,cnv.messages[cnv.messages.length-1].sender)}} : {{cnv.messages[cnv.messages.length-1].content}}</p>
+              <p *ngIf="!cnv.messages || cnv.messages.length===0">Aucun message encore !</p>
+
+          </ion-label>
+
+          <ion-badge slot="end"color='danger' *ngIf="cnv.unreadMessages!=0">{{cnv.unreadMessages}}</ion-badge>
+
+      </ion-item>
+
+      <ion-item-options>
+
+            <ion-item-option color="primary">
+              <ion-icon slot="icon-only" name="person-add"></ion-icon>
+            </ion-item-option>
+
+            <ion-item-option color="warning">
+              <ion-icon slot="icon-only" name="pencil"></ion-icon>
+            </ion-item-option>
+
+            <ion-item-option color="danger">
+              <ion-icon slot="icon-only" name="trash"></ion-icon>
+            </ion-item-option>
+
+      </ion-item-options>
+
+    </ion-item-sliding>
+  </ion-list>
+</cdk-virtual-scroll-viewport>
+
+<ion-fab class="fab" (click)="showCreationModal()">
+  <ion-fab-button>
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
+
+
+<ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button (click)="onCancelSearch()">Cancel</ion-button>
+        </ion-buttons>
+        <ion-title>Welcome</ion-title>
+        <ion-buttons slot="end">
+          <ion-button [strong]="true"(click)="onSubmitConversation()">Confirm</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <div class="search">
+        <ion-searchbar (keyup)="onSearchKeyUp($event)"></ion-searchbar>
+      </div>
+      <div class="users">
+        <ion-list class="ion-maring-bottom">
+          <ion-item *ngFor="let selected of selectedContacts">
+            <ion-avatar slot="start">
+              <ion-img [src]="selected.profilePic" alt="contactPicture"></ion-img>
+           </ion-avatar>
+           <ion-label>
+              <h2>{{selected.fullName}}</h2>
+              <h4>{{selected.username}}</h4>
+           </ion-label>
+           <ion-button fill="clear"(click)="toggleChooseContact(selected,false)"><ion-icon slot="icon-only" name="close-outline"></ion-icon></ion-button>
+          </ion-item>
+        </ion-list>
+        <hr>
+        <ion-list lass="ion-maring-top">
+          <ion-item *ngFor="let contact of contactList">
+             <ion-avatar slot="start">
+                <ion-img [src]="contact.profilePic" alt="contactPicture"></ion-img>
+             </ion-avatar>
+             <ion-label>
+                <h2>{{contact.fullName}}</h2>
+                <h4>{{contact.username}}</h4>
+             </ion-label>
+            <ion-checkbox slot="end" aria-label="Toggle task completion" (ionChange)="toggleChooseContact(contact,true)"></ion-checkbox>
+          </ion-item>
+        </ion-list>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+</ion-content>
+

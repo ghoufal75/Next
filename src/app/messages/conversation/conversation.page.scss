@@ -1,0 +1,121 @@
+.ionContent{
+  overflow-y: hidden !important;
+}
+.AlertTitle{
+  color : red !important;
+}
+.AlertContent{
+  ion-item{
+    --ion-item-background: transparent !important;
+  }
+  h5{
+    text-align: left !important;
+    background-color: red !important;
+  }
+}
+.wrapper{
+  width : 100vw;
+  height : 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-y: hidden !important;
+
+  flex-direction: column;
+  .header{
+    width : 100%;
+    display: flex;
+    justify-content: space-between;
+    padding : .5rem;
+    background-color: var(--ion-color-primary);
+    &__left{
+      display: flex;
+    }
+    &__right{
+      ion-button{
+        margin-top: .6rem;
+        &:not(:last-child){
+          margin-right: .5rem;
+        }
+      }
+    }
+    ion-avatar{
+      margin-left : .6rem;
+      margin-right: .8rem;
+    }
+    h5{
+      margin-top: .8rem;
+      font-weight: 900;
+      color : var(--ion-color-light);
+    }
+  }
+
+  &__overflow{
+    background-color: #f9f9f9;
+    padding : 1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 0px;
+    height : 94vh;
+  }
+  &__messages{
+    width : 100%;
+    height : 94vh;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+  }
+  &__message{
+    height : 7rem;
+    width : 15rem;
+    .content{
+      padding : 1rem 1.8rem;
+      border-radius : 20px;
+      box-shadow: 0 .6rem 1.2rem rgba(0,0,0,.14);
+    }
+    &:not(:last-child){
+      margin-bottom: .8rem;
+    }
+    .sentAt{
+      display: inline-block;
+      margin : .8rem;
+      font-size: .8rem;
+      color : #aeaeae
+    }
+
+  }
+  &__input{
+    height: 6vh;
+    padding : 1rem .8rem;
+    width : 100vw;
+    display: flex;
+    justify-content: flex-start;
+    .input{
+      flex : 11.5;
+      height: 2.3rem;
+      display: block;
+      input{
+        width : 100%;
+        display: block;
+        height : 100%;
+        padding : 1rem .8rem;
+        border: 1px solid #cdcdcd;
+        outline: 0;
+        border-radius: 30px;
+        margin-top: -.6rem;
+      }
+    }
+
+    .send{
+      margin-left: 1%;
+      // background-color: red;
+      flex : .5;
+      height : 100%;
+      ion-fab-button{
+        margin-top: -.7rem;
+      }
+    }
+
+  }
+}
