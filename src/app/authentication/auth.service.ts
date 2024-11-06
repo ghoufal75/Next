@@ -51,7 +51,6 @@ export class AuthService{
       case 400:
         error = "Invalid credentials.";
         break;
-
     }
     return throwError(()=>error);
   }

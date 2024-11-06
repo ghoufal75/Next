@@ -27,8 +27,28 @@
       </div>
     </div>
     <div class="wrapper__input">
+      <div class="left">
+        <!-- <button size="small" class="plus"  fill="clear"></button>  -->
+        <ion-fab  vertical="bottom" style="position: relative; display: block;" horizontal="start" #fab>
+          <ion-fab-button class="addBtn">
+            <ion-icon name="add-outline" ></ion-icon>
+          </ion-fab-button>
+          <ion-fab-list side="top" >
+            <ion-fab-button class="addons">
+              <ion-icon name="document-outline"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button class="addons">
+              <ion-icon name="camera-outline"></ion-icon>
+            </ion-fab-button>
+            <ion-fab-button class="addons" (click)="onImportingPhotos()">
+              <ion-icon name="image-outline"></ion-icon>
+            </ion-fab-button>       
+          </ion-fab-list>
+        </ion-fab>
+
+      </div>
       <div class="input">
-        <input type="text" class="msgInput" [(ngModel)]="messageInput">
+        <input type="text" class="msgInput" [(ngModel)]="messageInput" (keyup)="onWritingMessage($event)">
       </div>
       <div class="send">
         <ion-fab-button (click)=" sendMessage()" color="primary"size="small">

@@ -48,6 +48,7 @@ export class MessageListPage implements OnInit {
     this.subscribeToContactList();
     this.subscribeToSelectedConversationList();
     this.subscribeToReadMessages();
+    this.chatService.subscribeToReceivingNewConvs();
 
   }
 
@@ -113,6 +114,7 @@ export class MessageListPage implements OnInit {
       this.conversationList = res;
       if(!this.isGettingMessages){
         this.chatService.getMessages();
+        this.chatService.subscribeToWriting();
         this.isGettingMessages = true;
       }
     });

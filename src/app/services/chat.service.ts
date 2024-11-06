@@ -140,8 +140,34 @@ export class ChatService{
     })
   }
 
+  subscribeToReceivingNewConvs(){
+    this.socketService.onReceivingNewConv().subscribe(res=>{
+      console.log("Signal to fetch Conversations");
+      this.getConversations();
+    })
+  }
+
   emitContacts(){
     this.contact$.next(this.contactList);
+  }
+
+  emitIsWriting(emitedValue:boolean){
+    
+    this.socketService.emit("isWriting",JSON.stringify({sender : this.connectedUser._id,isWriting : emitedValue,conversation:this.actualConversation}));
+  }
+
+  subscribeToWriting(){
+    this.socketService.getIsWriting().subscribe(res=>{
+      if(res.isWriting){
+        this.conversationList.find(el=>el._id==res.conversation)?.messages.push({sender : res.sender,content:"Is Writing ..."});
+      }
+      else{
+        console.log("Stopped writing");
+        let newArray : any= this.conversationList.find(el=>el._id==res.conversation)?.messages.filter(msg=>msg.content!="Is Writing ...");
+        (this.conversationList.find(el=>el._id==res.conversation) as any).messages = newArray;
+      }
+      this.emitConversations();
+    })
   }
 
   getConversations(){

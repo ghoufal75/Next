@@ -1,12 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AlertController } from '@ionic/angular';
+import { AlertController, IonFab, IonFabButton, IonFabList } from '@ionic/angular';
 import { Observable } from 'rxjs';
 import { take } from 'rxjs/operators';
 import { AuthService } from 'src/app/authentication/auth.service';
 import { Conversation } from 'src/app/models/conversation.model';
 import { ChatService, Message } from 'src/app/services/chat.service';
-
+import { Camera, CameraResultType } from '@capacitor/camera';
 
 @Component({
   selector: 'app-conversation',
@@ -17,11 +17,45 @@ export class ConversationPage  {
   messageInput = '';
   messages$ : Observable<Message[]>;
   actualConversation : Conversation;
+  notWritingTimeOut : any = null;
   connectedUser : any;
+  @ViewChild('fab') elem : IonFab;
   constructor(private alertCtrl : AlertController,private authService : AuthService, private activatedRoute : ActivatedRoute,private chatService : ChatService) {
     this.authService.connectedUser$.pipe(take(1)).subscribe(res=>{
       this.connectedUser = res;
     })
+  }
+
+  async onImportingPhotos(){
+  
+      const images = await Camera.pickImages({
+        quality: 100,
+        correctOrientation : true,
+        limit : 10,
+      });
+      console.log("Images : ",images);
+
+  }
+
+  @HostListener('window:click', ['$event'])
+  DocumentClick(event: any) {
+      
+  }
+
+  onWritingMessage(e : any){
+    clearTimeout(this.notWritingTimeOut);
+    let value = e.target.value; 
+    if(value.trim() && value.trim()!="" && value.trim()!=" " ){
+      this.chatService.emitIsWriting(true);
+      this.notWritingTimeOut =  setTimeout(()=>{
+        this.chatService.emitIsWriting(false);
+      },2000)
+    }
+    else{
+      console.log("Stopped writing");
+      this.chatService.emitIsWriting(false);
+    }
+    
   }
 
   getSenderName(id:any){

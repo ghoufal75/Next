@@ -1,13 +1,14 @@
 import { Injectable } from "@angular/core";
 import { Socket } from "ngx-socket-io";
 import { AuthService } from "../authentication/auth.service";
-import { map, take } from "rxjs/operators";
+import { distinctUntilKeyChanged, filter, map, skipWhile, take } from "rxjs/operators";
 import { environment } from "src/environments/environment";
 
 @Injectable()
 export class SocketService extends Socket{
   token : any;
   user : any;
+  lastIsWriting :boolean;
   constructor(private authService : AuthService){
     super({url : environment.api,options:{autoConnect : false}})
     this.authService.connectedUser$.pipe(take(1)).subscribe(res=>{
@@ -19,6 +20,10 @@ export class SocketService extends Socket{
       this.connect();
 
     })
+  }
+  
+  onReceivingNewConv(){
+    return this.fromEvent('getNewConv');
   }
 
   joinConversations(){
@@ -44,6 +49,15 @@ export class SocketService extends Socket{
           }
           return msg;
         }));
+  }
+
+  getIsWriting(){
+    return this.fromEvent('isWriting').pipe(map((res:any)=>{
+      res = JSON.parse(res);
+      return res;
+    }),distinctUntilKeyChanged('isWriting'),filter((res:any)=>{
+      return res.sender!=this.user._id;
+    }))
   }
 
   onSucesfullySaved(){

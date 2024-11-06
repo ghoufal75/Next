@@ -88,9 +88,44 @@
   &__input{
     height: 6vh;
     padding : 1rem .8rem;
+    padding-left: 0 !important;
     width : 100vw;
     display: flex;
     justify-content: flex-start;
+    .left{
+      width : 2rem;
+      height: 2rem;
+      margin-top: -.5rem !important;
+      margin-right: .8rem;
+      .addons{
+        --color-activated : rgb(160,160,160) !important;
+        --color-focused :  rgb(160,160,160) !important;
+        --color-hover :  rgb(160,160,160) !important;
+        --color :  rgb(160,160,160) !important;
+      }
+      ion-fab-list{
+        margin-left: -.5rem !important;
+      }
+      .addBtn{
+        width : 2rem !important;
+        --background: transparent !important;
+        --background-focused : transparent !important;
+        --background-activated :transparent !important;
+        --background-hover : transparent !important;
+        --color-activated : rgb(160,160,160) !important;
+        --color-focused :  rgb(160,160,160) !important;
+        --color-hover :  rgb(160,160,160) !important;
+        --color :  rgb(160,160,160) !important;
+        --box-shadow : none;
+        height: 2rem !important;
+        margin-top: .6rem !important;
+        margin-left: -.2rem !important ;
+        ion-icon{
+          font-size: 1.5rem !important;
+        
+        }
+      }
+    }
     .input{
       flex : 11.5;
       height: 2.3rem;

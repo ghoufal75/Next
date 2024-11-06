@@ -66,27 +66,37 @@ export class AuthenticationPage  {
 
   async singInGoogle(){
    this.loader.present();
-   let googleUser = await GoogleAuth.signIn();
-   let user = {...googleUser} as any;
-   console.log("User: ",user);
-   delete user.authentication;
-   delete user.id;
-   delete user.serverAuthCode;
-   this.authService.signIn(user,'google').subscribe({
-    next : (res)=>{
-      if(res.firstConnection){
-          this.firstConnection = true;
+   try{
+     let googleUser = await GoogleAuth.signIn();
+     let user = {...googleUser} as any;
+     console.log("User: ",user);
+     delete user.authentication;
+     delete user.id;
+     delete user.serverAuthCode;
+     this.authService.signIn(user,'google').subscribe({
+      next : (res)=>{
+        if(res.firstConnection){
+            this.firstConnection = true;
+            this.loader.dismiss();
+        }
+        else{
+          this.router.navigateByUrl('/home/messages/messageList');
           this.loader.dismiss();
-      }
-      else{
-        this.router.navigateByUrl('/home/messages/messageList');
+        }
+      },
+      error : (err)=>{
+        console.log("There was an error : ",err);
+        this.error = err;
         this.loader.dismiss();
       }
-    },
-    error : (err)=>{
-      this.error = err;
-    }
-   })
+     })
+   }
+   catch(err){
+    console.log("There was an error : ",err);
+    this.loader.dismiss();
+    
+   }
+ 
   }
 
   async singInFacebook(){
