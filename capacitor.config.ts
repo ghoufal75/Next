@@ -14,6 +14,9 @@ const config: CapacitorConfig = {
       "serverId": "564987887798-7041k8coh25u4v5alre4me27knhfueuq.apps.googleusercontent.com",
       "forceCodeForRefreshToken": true
     },
+    "PushNotifications": {
+      "presentationOptions": ["badge", "sound", "alert"]
+    },
     CapacitorHttp: {
       enabled: true
     }

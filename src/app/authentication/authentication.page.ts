@@ -4,8 +4,8 @@ import { GoogleAuth } from '@codetrix-studio/capacitor-google-auth';
 import { LoadingController, Platform } from '@ionic/angular';
 import { AuthService } from './auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { FacebookLogin, FacebookLoginResponse } from '@capacitor-community/facebook-login';
-import { FACEBOOK_PERMISSIONS } from '../data/facebook-permissions';
+// import { FacebookLogin, FacebookLoginResponse } from '@capacitor-community/facebook-login';
+// import { FACEBOOK_PERMISSIONS } from '../data/facebook-permissions';
 import { PictureService } from '../services/picture.service';
 import { AccountManagementService } from '../services/account-management.service';
 
@@ -58,7 +58,8 @@ export class AuthenticationPage  {
   initializeGoogleAuth(){
     this.platform.ready().then(()=>{
       GoogleAuth.initialize();
-      return FacebookLogin.initialize({ appId: '502994582065134' });
+      return;
+      // return FacebookLogin.initialize({ appId: '502994582065134' });
     }).then((res)=>{
 
     })
@@ -99,30 +100,38 @@ export class AuthenticationPage  {
  
   }
 
-  async singInFacebook(){
-    this.loader.present();
-    const token = await (<FacebookLoginResponse><unknown>(
-      FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS })
-    ));
-    console.log("Result of fb login : ",token);
-    const user = await FacebookLogin.getProfile({ fields:  ['email','name','first_name','last_name']});
-    this.authService.signIn(user,'facebook').subscribe({
-      next : (res)=>{
-        if(res.firstConnection){
-          this.firstConnection = true;
-          this.loader.dismiss();
-        }
-        else{
-          this.router.navigateByUrl('/home/messages/messageList');
-          this.loader.dismiss();
-        }
-      },
-      error : (err)=>{
-        console.log("Here is error : ",err);
-        this.error = err;
-      }
-     })
-   }
+  // async singInFacebook(){
+  //   this.loader.present();
+  //   try{
+  //     const token = await (<FacebookLoginResponse><unknown>(
+  //       FacebookLogin.login({ permissions: FACEBOOK_PERMISSIONS })
+  //     ));
+  //     console.log("Result of fb login : ",token);
+  //     const user = await FacebookLogin.getProfile({ fields:  ['email','name','first_name','last_name']});
+  //     this.authService.signIn(user,'facebook').subscribe({
+  //       next : (res)=>{
+  //         if(res.firstConnection){
+  //           this.firstConnection = true;
+  //           this.loader.dismiss();
+  //         }
+  //         else{
+  //           this.router.navigateByUrl('/home/messages/messageList');
+  //           this.loader.dismiss();
+  //         }
+  //       },
+  //       error : (err)=>{
+  //         console.log("Here is error : ",err);
+  //         this.loader.dismiss();
+  //         this.error = err;
+  //       }
+  //      })
+
+  //   }
+  //   catch(err){
+  //     console.log("There was an error : ",err);
+  //     this.loader.dismiss();
+  //   }
+  //  }
 
 
 

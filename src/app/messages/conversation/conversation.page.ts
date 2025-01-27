@@ -33,14 +33,25 @@ export class ConversationPage  {
         correctOrientation : true,
         limit : 10,
       });
-      console.log("Images : ",images);
-
+      const file = await this.convertImageWebPathToBlob(images.photos[0].webPath);
+      // this.chatService.sendFile({sender:this.connectedUser._id,conversation:this.actualConversation._id,file:file});
   }
+
+ 
 
   @HostListener('window:click', ['$event'])
   DocumentClick(event: any) {
       
   }
+
+  async  convertImageWebPathToBlob(imageWebPath:any) {
+    const response = await fetch(imageWebPath);
+    return  await response.blob();
+
+  }
+
+
+
 
   onWritingMessage(e : any){
     clearTimeout(this.notWritingTimeOut);

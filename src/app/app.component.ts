@@ -1,8 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from './authentication/auth.service';
 import {filter, take} from 'rxjs/operators';
-import { IonMenu } from '@ionic/angular';
+import { IonMenu, Platform } from '@ionic/angular';
 import { NavigationEnd, Router } from '@angular/router';
+import { FcmService } from './services/fcm/fcm.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -12,7 +13,11 @@ export class AppComponent implements OnInit{
   currentUser : any = {};
   @ViewChild('menu') menu : IonMenu;
   isAuth  = true;
-  constructor(private router : Router,private authService : AuthService) {}
+  constructor(private router : Router,private authService : AuthService,private platform : Platform,private fcm : FcmService) {
+    this.platform.ready().then(()=>{
+      this.fcm.initPush();
+    }).catch(err=>{console.log("An error occurred while initializing fcm : ",err)});
+  }
 
   ngOnInit(): void {
     this.router.events.pipe(

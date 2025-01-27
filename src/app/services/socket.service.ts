@@ -34,6 +34,10 @@ export class SocketService extends Socket{
     this.emit("message",payload);
   }
 
+  onFileChunk(){
+    return this.fromEvent("fileChunk");
+  }
+
   getSeenByUser(){
     return this.fromEvent('messageRead').pipe(map((res:any)=> JSON.parse(res)));
   }

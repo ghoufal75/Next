@@ -170,6 +170,66 @@ export class ChatService{
     })
   }
 
+
+  // sendFile(content:any){
+  //   try {
+  //     let file = content.file
+	// 		// Check for the various File API support
+				
+	// 			// change 
+				
+	// 			// read audio file
+	// 			var reader = new FileReader();
+				
+	// 			// event triggered wghen the file is loaded
+	// 			reader.onload = (fev:any) => {
+					
+	// 				var chunkIndex = 0; // current index to start rading file
+	// 				var chunkIndexEnd = chunkIndex + 5000; // send 5000 bits per message
+	// 				var fileBiteLength = fev.target.result.length;
+					
+	// 				// called when the server is ready to get the data
+	// 				this.socketService.once('serverUploadReady', ()=>{
+	// 					var isEnd = false;
+	// 					if(chunkIndexEnd >= fileBiteLength) {
+	// 						chunkIndexEnd -= (chunkIndexEnd - fileBiteLength);
+	// 						isEnd = true;
+	// 					}
+	// 					var chunk = fev.target.result.slice(chunkIndex, chunkIndexEnd);
+						
+	// 					chunkIndex += chunkIndexEnd; // increment current file pointer
+	// 					chunkIndexEnd += 5000; // send 5000 bits per message
+						
+	// 					this.socketService.emit('clientUplaodChunk', {
+	// 						chunk : chunk,
+	// 						end : isEnd
+	// 					});
+	// 				});
+					
+	// 				// called when the server has recieved a complete file and is ready for the metadata
+	// 				this.socketService.once('serverUploadComplete', (data:any)=>{
+	// 					this.socketService.emit('add', {
+	// 						sid : sid,
+	// 						name : $('#name').val(),
+	// 						description : $('#description').val(),
+	// 						file : data.fileid
+	// 					});
+	// 				});
+					
+	// 				// send notice to server that a fileupload is coming in
+	// 				// episodeSock.emit('clientUplaodReady', {
+	// 				// 	sid : sid,
+	// 				// 	filename : file.name
+	// 				// });
+	// 			};
+				
+	// 			reader.readAsBinaryString(file);
+			
+	// 	} catch(e:any) {
+	// 		return;
+	// 	}
+  // }
+
   getConversations(){
     this.http.get(environment.api+'/api/chat/conversation').pipe(
       map((res:any)=>{
